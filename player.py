@@ -1,7 +1,7 @@
 import pygame
 
 class Snake_part(object):
-	def __init__(self,pos,color = (0,255,0)):
+	def __init__(self,pos,color = (0,100,100)):
 		self.m_x = pos[0]
 		self.m_y = pos[1]
 		self.x = self.m_x * 10
@@ -20,14 +20,14 @@ class Snake(object) :
 		self.lenght = 10
 
 		self.tail = []
-		self.time_tick = 40
-		self.speed = 20
+		self.time_tick = 80
+		self.speed = 10
 		self.time = 0
 		self.last_key = None
 		self.h_x = -1
 		self.h_y = 0
 
-		self.head_color = (0,0,255)
+		self.head_color = (0,0,0)
 		self.head = Snake_part((self.x,self.y),self.head_color)
 		self.point = 0
 		self.is_dead = False
@@ -52,8 +52,8 @@ class Snake(object) :
 		for t in self.tail :
 			if t.m_x == self.x and t.m_y == self.y :
 				self.is_dead = True
-                if self.x < 0 or self.x > 40 or self.y < 0 or self.y > 40 :
-                        self.is_dead = True
+		if self.x < 0 or self.x > 40 or self.y < 0 or self.y > 40 :
+			self.is_dead = True
 
 	def increase_lenght(self,value,point):
 		self.lenght += value

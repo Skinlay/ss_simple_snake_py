@@ -6,7 +6,7 @@ class Game_Window(object):
 	def __init__(self):
 		pygame.init()
 
-		self.screen = pygame.display.set_mode((400,400),0,32)
+		self.screen = pygame.display.set_mode((410,410),0,32)
 		self.clock = pygame.time.Clock()
 		self.player = player.Snake(400,400)
 		self.Food = food.Food()
