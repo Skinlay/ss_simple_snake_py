@@ -67,7 +67,11 @@ class Snake(object):
         self.lenght += value
         self.point += point
         while self.lenght < len(self.tail):
-            t = self.tail.pop()
+            try:
+                t = self.tail.pop()
+            except:
+                self.is_dead = True
+                break
             t.blit(screen)
 
     def update_position(self, dt):
