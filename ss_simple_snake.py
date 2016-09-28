@@ -9,7 +9,7 @@ class Game_Window(object):
 		self.screen = pygame.display.set_mode((410,410),0,32)
 		self.clock = pygame.time.Clock()
 		self.player = player.Snake(400,400)
-		self.Food = food.Food()
+		self.foodpile = food.Food()
 
 		self.font = pygame.font.SysFont('Comic Sans MS',40)
 
@@ -40,7 +40,7 @@ class Game_Window(object):
 		self.player.is_dead = False
 		self.clock.tick()
 		self.player.restart()
-		self.Food.restart()
+		self.foodpile.restart()
 
 	def run(self):
 		while True :
@@ -51,7 +51,7 @@ class Game_Window(object):
 
 			dt = self.clock.tick()
 			self.player.update(dt,self.screen)
-			self.Food.update(dt,self.screen,self.player)
+			self.foodpile.update(dt, self.screen, self.player)
 			self.blit_grid()
 
 			if self.player.is_dead :
