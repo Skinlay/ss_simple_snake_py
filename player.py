@@ -2,7 +2,7 @@ import pygame
 
 
 class Snake_part(object):
-    def __init__(self, pos, color=(0, 100, 100)):
+    def __init__(self, pos, color=(100, 0, 100)):
         self.m_x = pos[0]
         self.m_y = pos[1]
         self.x = self.m_x * 10
@@ -63,9 +63,12 @@ class Snake(object):
         if self.y > 40:
             self.y = 0
 
-    def increase_lenght(self, value, point):
+    def increase_lenght(self, value, point, screen):
         self.lenght += value
         self.point += point
+        while self.lenght < len(self.tail):
+            t = self.tail.pop()
+            t.blit(screen)
 
     def update_position(self, dt):
         self.time += dt
