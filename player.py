@@ -2,7 +2,7 @@ import pygame
 
 
 class Snake_part(object):
-    def __init__(self, pos, color=(100, 0, 100)):
+    def __init__(self, pos, color=(210, 129, 239)):
         self.m_x = pos[0]
         self.m_y = pos[1]
         self.x = self.m_x * 10
@@ -19,7 +19,7 @@ class Snake(object):
         self.x = 38
         self.y = 0
 
-        self.lenght = 10
+        self.lenght = 5
 
         self.tail = []
         self.time_tick = 80
@@ -38,7 +38,7 @@ class Snake(object):
         self.x = 38
         self.y = 0
         self.is_dead = False
-        self.lenght = 10
+        self.lenght = 5
         self.tail = []
         self.speed = 1
         self.time = 0

@@ -61,7 +61,6 @@ class Game_Window(object):
 			self.screen.blit(point,(0,0))
 			pygame.display.update()
 
-
 if __name__ == '__main__':
 	app = Game_Window()
 	app.run()

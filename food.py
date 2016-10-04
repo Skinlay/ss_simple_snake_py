@@ -8,10 +8,13 @@ class Food_piece(object):
         self.m_y = pos[1]
         self.x = self.m_x * 10
         self.y = self.m_y * 10
-        keuze = [0, 1, 1, 1, 1, 1, 1]
+        keuze = [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2]
         kleur = random.choice(keuze)
         if kleur == 0:
             color = (0,255,0)
+        self.color = color
+        if kleur == 2:
+            color = (255, 255, 0)
         self.color = color
 
     def blit(self, screen):
@@ -56,7 +59,9 @@ class Food(object):
         for f_piece in self.food:
             if f_piece.m_x == snake.x and f_piece.m_y == snake.y:
                 if f_piece.color == (0, 255, 0):
-                    snake.increase_lenght(-3, 10, screen)
+                    snake.increase_lenght(-2, 10, screen)
+                if f_piece.color == (255, 255,0):
+                    snake.increase_lenght(-5, 20, screen)
                 else:
                     snake.increase_lenght(1, 5, screen)
                 self.food.remove(f_piece)
