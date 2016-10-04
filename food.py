@@ -14,7 +14,7 @@ class Food_piece(object):
             color = (0,255,0)
         self.color = color
         if kleur == 2:
-            color = (255, 255, 0)
+            color = (254, 254, 1)
         self.color = color
 
     def blit(self, screen):
