@@ -60,7 +60,7 @@ class Food(object):
             if f_piece.m_x == snake.x and f_piece.m_y == snake.y:
                 if f_piece.color == (0, 255, 0):
                     snake.increase_lenght(-2, 10, screen)
-                if f_piece.color == (255, 255,0):
+                elif f_piece.color == (254, 254,1):
                     snake.increase_lenght(-5, 20, screen)
                 else:
                     snake.increase_lenght(1, 5, screen)
