@@ -12,8 +12,7 @@ class Food_piece(object):
         kleur = random.choice(keuze)
         if kleur == 0:
             color = (0,255,0)
-        self.color = color
-        if kleur == 2:
+        elif kleur == 2:
             color = (254, 254, 1)
         self.color = color
 
@@ -50,7 +49,7 @@ class Food(object):
 
     def update(self, dt, screen, snake):
         self.time += dt
-        if self.time >= self.time_tick or len(self.food) == 0:
+        if ((self.time >= self.time_tick) or len(self.food) == 0) and len(self.food) < 5:
             self.time = 0
             x, y = self.random_pos(snake)
             f_piece = Food_piece((x, y))
