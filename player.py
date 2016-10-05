@@ -18,6 +18,7 @@ class Snake(object):
     def __init__(self, width, height):
         self.x = 38
         self.y = 0
+        self.moved = False
 
         self.lenght = 5
 
@@ -44,6 +45,7 @@ class Snake(object):
         self.time = 0
         self.h_x = -1
         self.h_y = 0
+        self.moved = False
 
     def update(self, dt, screen):
         self.update_position(dt)
@@ -77,18 +79,23 @@ class Snake(object):
     def update_position(self, dt):
         self.time += dt
         key_pressed = pygame.key.get_pressed()
-        if key_pressed[pygame.K_UP] and self.h_y != +1:
-            self.h_x = 0
-            self.h_y = -1
-        elif key_pressed[pygame.K_DOWN] and self.h_y != -1:
-            self.h_x = 0
-            self.h_y = +1
-        elif key_pressed[pygame.K_LEFT] and self.h_x != +1:
-            self.h_x = -1
-            self.h_y = 0
-        elif key_pressed[pygame.K_RIGHT] and self.h_x != -1:
-            self.h_x = +1
-            self.h_y = 0
+        if not self.moved:
+            if key_pressed[pygame.K_UP] and self.h_y != +1:
+                self.h_x = 0
+                self.h_y = -1
+                self.moved = True
+            elif key_pressed[pygame.K_DOWN] and self.h_y != -1:
+                self.h_x = 0
+                self.h_y = +1
+                self.moved = True
+            elif key_pressed[pygame.K_LEFT] and self.h_x != +1:
+                self.h_x = -1
+                self.h_y = 0
+                self.moved = True
+            elif key_pressed[pygame.K_RIGHT] and self.h_x != -1:
+                self.h_x = +1
+                self.h_y = 0
+                self.moved = True
         if self.time >= self.time_tick:
             self.tail.insert(0, Snake_part((self.x, self.y)))
             self.x += self.h_x
@@ -97,6 +104,7 @@ class Snake(object):
             if len(self.tail) > self.lenght:
                 self.tail.pop(len(self.tail) - 1)
             self.time = 0
+            self.moved = False
 
     def blit(self, screen):
         for t in self.tail:
