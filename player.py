@@ -46,6 +46,7 @@ class Snake(object):
         self.h_x = -1
         self.h_y = 0
         self.moved = False
+        self.point = 0
 
     def update(self, dt, screen):
         self.update_position(dt)
