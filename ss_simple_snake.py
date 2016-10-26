@@ -13,6 +13,7 @@ class Game_Window(object):
         self.foodpile = food.Food()
 
         self.font = pygame.font.SysFont('Comic Sans MS', 40)
+        self.name = ''
 
     def blit_grid(self):
         for x in range(40):
@@ -45,6 +46,8 @@ class Game_Window(object):
 
     def run(self):
         while True:
+            if self.name == '':
+                self.get_name()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     exit()
@@ -57,11 +60,30 @@ class Game_Window(object):
 
             if self.player.is_dead:
                 self.game_over()
+                self.name = ''
 
             point = self.font.render(str(self.player.point), True, (0, 0, 0))
             self.screen.blit(point, (0, 0))
             pygame.display.update()
 
+    def get_name (self):
+        running = True
+        while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    exit()
+                elif event.type == pygame.KEYDOWN and event.key != pygame.K_RETURN:
+                    self.name += event.unicode
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                    running = False
+            self.screen.fill((255, 255, 255))
+            text = self.font.render('ENTER NAME: ', True, (0, 0, 0))
+            self.screen.blit(text, (200 - text.get_width() / 2, 200 - text.get_height()))
+            t2 = str(self.name) + '_'
+            text2 = self.font.render(t2, True, (0, 0, 0))
+            self.screen.blit(text2, (200 - text2.get_width() / 2, 200 + text2.get_height()))
+
+            pygame.display.update()
 
 if __name__ == '__main__':
     app = Game_Window()
