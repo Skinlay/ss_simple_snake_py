@@ -1,6 +1,7 @@
 import pygame
 import player
 import food
+import operator
 
 
 class Game_Window(object):
@@ -14,6 +15,7 @@ class Game_Window(object):
 
         self.font = pygame.font.SysFont('Comic Sans MS', 40)
         self.name = ''
+        self.highscore = []
 
     def blit_grid(self):
         for x in range(40):
@@ -33,11 +35,17 @@ class Game_Window(object):
                     running = False
             self.screen.fill((255, 255, 255))
             text = self.font.render('GAME OVER ', True, (255, 0, 0))
-            self.screen.blit(text, (200 - text.get_width() / 2, 200 - text.get_height()))
+            textheight = 1.5 * text.get_height()
+            self.screen.blit(text, (200 - text.get_width() / 2, 50))
             t2 = 'POINT : ' + str(self.player.point)
             text2 = self.font.render(t2, True, (255, 0, 0))
-            self.screen.blit(text2, (200 - text2.get_width() / 2, 200 + text2.get_height()))
-
+            self.screen.blit(text2, (200 - text2.get_width() / 2, 50 + textheight))
+            i = 2
+            s_highscore = sorted(self.highscore, key=operator.itemgetter(1), reverse=True)
+            for score in s_highscore:
+                s = self.font.render(score[0]+': '+str(score[1]), True, (0,0,0))
+                self.screen.blit(s,(200 - text2.get_width() / 2, 50 + (i*textheight)))
+                i = i+1
             pygame.display.update()
         self.player.is_dead = False
         self.clock.tick()
@@ -59,6 +67,7 @@ class Game_Window(object):
             self.blit_grid()
 
             if self.player.is_dead:
+                self.highscore.append((self.name, self.player.point))
                 self.game_over()
                 self.name = ''
 
@@ -72,10 +81,13 @@ class Game_Window(object):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     exit()
-                elif event.type == pygame.KEYDOWN and event.key != pygame.K_RETURN:
-                    self.name += event.unicode
-                elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                    running = False
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:
+                        running = False
+                    elif event.key == pygame.K_BACKSPACE:
+                        self.name = self.name[:-1]
+                    else:
+                        self.name += event.unicode
             self.screen.fill((255, 255, 255))
             text = self.font.render('ENTER NAME: ', True, (0, 0, 0))
             self.screen.blit(text, (200 - text.get_width() / 2, 200 - text.get_height()))
