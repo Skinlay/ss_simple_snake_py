@@ -24,7 +24,7 @@ class Snake(object):
 
         self.tail = []
         self.time_tick = 80
-        self.speed = 10
+        self.speed = 1000
         self.time = 0
         self.last_key = None
         self.h_x = -1
@@ -41,7 +41,7 @@ class Snake(object):
         self.is_dead = False
         self.lenght = 5
         self.tail = []
-        self.speed = 1
+        self.speed = 1000
         self.time = 0
         self.h_x = -1
         self.h_y = 0

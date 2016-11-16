@@ -2,6 +2,7 @@ import pygame
 import player
 import food
 import operator
+import pickle
 
 
 class Game_Window(object):
@@ -23,6 +24,31 @@ class Game_Window(object):
         for y in range(40):
             pygame.draw.aaline(self.screen, (255, 255, 255), (0, y * 10), (400, y * 10))
 
+    def show_highscore(self):
+        self.screen.fill((255, 255, 255))
+        text = self.font.render('GAME OVER ', True, (255, 0, 0))
+        textheight = 1.5 * text.get_height()
+        self.screen.blit(text, (200 - text.get_width() / 2, 50))
+        t2 = 'POINT : ' + str(self.player.point)
+        text2 = self.font.render(t2, True, (255, 0, 0))
+        self.screen.blit(text2, (200 - text2.get_width() / 2, 50 + textheight))
+        i = 2
+        s_highscore = sorted(self.highscore, key=operator.itemgetter(1), reverse=True)
+        for score in s_highscore:
+            s = self.font.render(score[0] + ': ' + str(score[1]), True, (0, 0, 0))
+            self.screen.blit(s, (200 - text2.get_width() / 2, 50 + (i * textheight)))
+            i = i + 1
+        self.save_highscore()
+        pygame.display.update()
+
+    def save_highscore(self):
+        with open('highscore.snake','w') as f:
+            pickle.dump(self.highscore, f)
+
+    def load_highscore(self):
+        with open('highscore.snake','r') as f:
+            self.highscore = pickle.load(f)
+
     def game_over(self):
         running = True
         time = 0
@@ -33,26 +59,14 @@ class Game_Window(object):
                     exit()
                 if event.type == pygame.KEYDOWN and time > 1500:
                     running = False
-            self.screen.fill((255, 255, 255))
-            text = self.font.render('GAME OVER ', True, (255, 0, 0))
-            textheight = 1.5 * text.get_height()
-            self.screen.blit(text, (200 - text.get_width() / 2, 50))
-            t2 = 'POINT : ' + str(self.player.point)
-            text2 = self.font.render(t2, True, (255, 0, 0))
-            self.screen.blit(text2, (200 - text2.get_width() / 2, 50 + textheight))
-            i = 2
-            s_highscore = sorted(self.highscore, key=operator.itemgetter(1), reverse=True)
-            for score in s_highscore:
-                s = self.font.render(score[0]+': '+str(score[1]), True, (0,0,0))
-                self.screen.blit(s,(200 - text2.get_width() / 2, 50 + (i*textheight)))
-                i = i+1
-            pygame.display.update()
+            self.show_highscore()
         self.player.is_dead = False
         self.clock.tick()
         self.player.restart()
         self.foodpile.restart()
 
     def run(self):
+        self.load_highscore()
         while True:
             if self.name == '':
                 self.get_name()
